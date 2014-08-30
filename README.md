@@ -1,8 +1,8 @@
-# What is nProbe ElK Stak?
-
+# What is nProbe?
 [nProbe™ v6 An Extensible NetFlow v5/v9/IPFIX GPL Probe for IPv4/v6](http://www.ntop.org/products/nprobe/)
 
-[The Elasticsearch ELK Stack](http://www.elasticsearch.org/overview/)
+# What is ELK?
+[Elasticsearch-Logstash-Kibana Stack](http://www.elasticsearch.org/overview/)
 
 # Setup
 
