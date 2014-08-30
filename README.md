@@ -10,26 +10,17 @@ This script will (in random order) :
 
 - Install ELK Stack (ElasticSearch + LogStash + Kibana) in single-node
 - Install nProbe (unlicensed binary)
-- Configure Logstash to receive/parse nProbe JSON received on port TCP 5656
+- Configure Logstash to receive/parse nProbe JSON (TCP port 5656)
 
 
 
-The entire setup has been automated for Ubuntu. Simply run the following commands:
-
-```
-$ git clone https://github.com/lmangani/nprobe-ELK.git
-$ cd nprobe-ELK
-$ chmod +x elk-ubuntu.sh
-$ sudo ./elk-ubuntu.sh
-```
-
-If you're on stock debian, use the following commands instead:
+The entire setup has been automated for Ubuntu and Debian. Simply run the following commands:
 
 ```
 $ git clone https://github.com/lmangani/nprobe-ELK.git
 $ cd nprobe-ELK
-$ chmod +x elk-debian.sh
-$ sudo ./elk-debian.sh
+$ chmod +x elk-nprobe.sh
+$ sudo ./elk-nprobe.sh
 ```
 
 Once installed, you should be set to run nProbe:
@@ -40,5 +31,5 @@ $ nprobe --version
 
 You can now use nProbe to send data to your ELK stack:
 ```
-$ nprobe -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %HTTP_SITE %HTTP_RET_CODE %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE" --tcp "127.0.0.1:5656" -b 2 -i any --json-labels
+$ nprobe -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %HTTP_SITE %HTTP_RET_CODE %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE %SRC_IP_COUNTRY %DST_IP_COUNTRY %APPL_LATENCY_MS" --tcp "127.0.0.1:5656" -b 1 -i any --json-labels -t 60
 ```
