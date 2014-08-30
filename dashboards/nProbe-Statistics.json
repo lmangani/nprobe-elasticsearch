@@ -1,0 +1,525 @@
+{
+  "index": {
+    "default": "_all",
+    "pattern": "[packetbeat-]YYYY.MM.DD",
+    "warm_fields": true,
+    "interval": "day"
+  },
+  "style": "light",
+  "rows": [
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Events",
+      "editable": true,
+      "height": "100px",
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "@timestamp",
+          "value_field": null,
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "30s",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Events"
+        }
+      ]
+    },
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Bytes",
+      "editable": true,
+      "height": "200px",
+      "panels": [
+        {
+          "span": 6,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "mean",
+          "time_field": "@timestamp",
+          "value_field": "IN_BYTES",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "30s",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "IN BYTES"
+        },
+        {
+          "span": 6,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "mean",
+          "time_field": "@timestamp",
+          "value_field": "OUT_BYTES",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "none",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "30s",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": false,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": true,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "OUT BYTES"
+        }
+      ]
+    },
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Proto Stats",
+      "editable": true,
+      "height": "200px",
+      "panels": [
+        {
+          "span": 3,
+          "editable": true,
+          "type": "hits",
+          "loadingEditor": false,
+          "style": {
+            "font-size": "10pt"
+          },
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "none",
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "spyable": true,
+          "queries": {
+            "mode": "pinned",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "title": "Proto Pie"
+        },
+        {
+          "error": false,
+          "span": 9,
+          "editable": true,
+          "type": "stats",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "style": {
+            "font-size": "24pt"
+          },
+          "format": "number",
+          "mode": "mean",
+          "display_breakdown": "yes",
+          "sort_field": "",
+          "sort_reverse": false,
+          "label_name": "Query",
+          "value_name": "Value",
+          "spyable": true,
+          "show": {
+            "count": true,
+            "min": true,
+            "max": true,
+            "mean": true,
+            "std_deviation": true,
+            "sum_of_squares": true,
+            "total": true,
+            "variance": true
+          },
+          "field": "APPL_LATENCY_MS",
+          "title": "Application Latency (ms)",
+          "unit": "ms"
+        }
+      ]
+    }
+  ],
+  "title": "nProbe Statistics",
+  "failover": true,
+  "editable": true,
+  "refresh": false,
+  "loader": {
+    "load_gist": false,
+    "hide": false,
+    "save_temp": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "save_temp_ttl": "30d",
+    "load_elasticsearch": true,
+    "save_local": true,
+    "save_temp_ttl_enable": true,
+    "save_elasticsearch": true,
+    "save_gist": false,
+    "save_default": true
+  },
+  "pulldowns": [
+    {
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "pinned": true,
+      "query": "*",
+      "history": [
+        "type:nProbe AND L7_PROTO_NAME: 'Unknown'",
+        "type:nProbe",
+        "type:nProbe AND L7_PROTO_NAME: 'SSH'",
+        "type:nProbe AND L7_PROTO_NAME: ''",
+        "type:nProbe AND L7_PROTO_NAME: 'ICMP'",
+        "type:nProbe AND L7_PROTO_NAME: 'HTTP'",
+        "type:http AND responsetime: [100 TO 100000]",
+        "*",
+        "type:http AND responsetime: [50 TO 100}",
+        "type:http AND responsetime: [30 TO 50}"
+      ],
+      "type": "query",
+      "remember": 10
+    },
+    {
+      "notice": true,
+      "enable": false,
+      "type": "filtering",
+      "collapse": false
+    }
+  ],
+  "nav": [
+    {
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "dashboards": [
+        "nProbe Statistics",
+        "nProbe Search",
+        "nProbe - Logstash Search",
+        "nProbe - IP Flows",
+        "nProbe - Geo Stats"
+      ],
+      "label": "Page: ",
+      "type": "dashboard_dropdown"
+    },
+    {
+      "status": "Stable",
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m"
+      ],
+      "filter_id": 0,
+      "timefield": "@timestamp",
+      "now": true,
+      "type": "timepicker"
+    }
+  ],
+  "services": {
+    "filter": {
+      "list": {
+        "0": {
+          "type": "time",
+          "field": "@timestamp",
+          "from": "now-1h",
+          "to": "now",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 0
+        }
+      },
+      "ids": [
+        0
+      ],
+      "idQueue": [
+        1,
+        2
+      ]
+    },
+    "query": {
+      "list": {
+        "0": {
+          "enable": true,
+          "pin": true,
+          "color": "#7EB26D",
+          "alias": "HTTP",
+          "query": "type:nProbe AND L7_PROTO_NAME: 'HTTP'",
+          "type": "lucene",
+          "id": 0
+        },
+        "1": {
+          "enable": true,
+          "pin": true,
+          "color": "#CCA300",
+          "alias": "ICMP",
+          "query": "type:nProbe AND L7_PROTO_NAME: 'ICMP'",
+          "type": "lucene",
+          "id": 1
+        },
+        "2": {
+          "enable": true,
+          "pin": true,
+          "color": "#C15C17",
+          "alias": "NULL",
+          "query": "type:nProbe AND L7_PROTO_NAME: ''",
+          "type": "lucene",
+          "id": 2
+        },
+        "3": {
+          "enable": true,
+          "pin": true,
+          "color": "#E24D42",
+          "alias": "SSH",
+          "query": "type:nProbe AND L7_PROTO_NAME: 'SSH'",
+          "type": "lucene",
+          "id": 3
+        },
+        "6": {
+          "id": 6,
+          "color": "#BA43A9",
+          "alias": "",
+          "pin": true,
+          "type": "lucene",
+          "enable": false,
+          "query": "type:nProbe"
+        },
+        "17": {
+          "enable": true,
+          "pin": true,
+          "color": "#890F02",
+          "alias": "UNKNOWN",
+          "query": "type:nProbe AND L7_PROTO_NAME: 'Unknown'",
+          "type": "lucene",
+          "id": 17
+        }
+      },
+      "ids": [
+        0,
+        1,
+        2,
+        3,
+        6,
+        17
+      ],
+      "idQueue": [
+        4
+      ]
+    }
+  },
+  "panel_hints": true
+}
