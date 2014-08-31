@@ -14,7 +14,7 @@ This script will (in random order) :
 - Install ELK Stack (ElasticSearch + LogStash + Kibana) in single-node
 - Install nProbe (unlicensed binary)
 - Configure Logstash to receive/parse nProbe JSON (TCP port 5656)
-- Install custom Kibana Dashboards for nProbe metrics
+- Install custom Kibana Dashboards for nProbe metrics (/dashboards)
 
 
 
