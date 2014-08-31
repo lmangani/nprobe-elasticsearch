@@ -27,7 +27,9 @@ $ chmod +x elk-nprobe.sh
 $ sudo ./elk-nprobe.sh
 ```
 
-Once installed, you should be set to run nProbe:
+Once installed, you should be all set. If you already have an ELK setup, just copy conf.d/nprobe.conf to your logstash settings and install nProbe only, adjusting the below settings.
+
+Verify nProbe is functioning:
 
 ```
 $ nprobe --version
