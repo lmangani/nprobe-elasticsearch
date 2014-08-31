@@ -1,15 +1,15 @@
 # nProbe-ElasticSearch
 This project brings nProbe metrics into ELK stack(s) for code development, data modeling and dashboard prototyping.
 
-# What is nProbe?
-[nProbe™ v6 An Extensible NetFlow v5/v9/IPFIX GPL Probe for IPv4/v6](http://www.ntop.org/products/nprobe/)
+## What is nProbe?
+[nProbe™ v6 An Extensible NetFlow v5/v9/IPFIX GPL Probe for IPv4/v6](http://www.ntop.org/products/nprobe/)  [(ntop.org)](http://www.ntop.org/)
 
-# What is ELK?
-[Elasticsearch-Logstash-Kibana Stack](http://www.elasticsearch.org/overview/)
+## What is ELK?
+[Elasticsearch-Logstash-Kibana Stack (elasticsearch.org)](http://www.elasticsearch.org/overview/)
 
 ## Setup
 
-This script will (in random order) :
+The provided script(s) will :
 
 - Install ELK Stack (ElasticSearch + LogStash + Kibana) in single-node
 - Install nProbe (unlicensed binary)
