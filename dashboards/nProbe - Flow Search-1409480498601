@@ -123,10 +123,13 @@
           "sortable": true,
           "fields": [
             "@timestamp",
-            "_type",
             "L7_PROTO_NAME",
             "IPV4_SRC_ADDR",
-            "IPV4_DST_ADDR"
+            "L4_SRC_PORT",
+            "IPV4_DST_ADDR",
+            "L4_DST_PORT",
+            "IN_BYTES",
+            "OUT_BYTES"
           ],
           "paging": true,
           "queries": {
@@ -146,10 +149,10 @@
       "collapsable": true
     }
   ],
-  "title": "nProbe Search",
+  "title": "nProbe - Flow Search",
   "failover": true,
   "editable": true,
-  "refresh": false,
+  "refresh": "30s",
   "loader": {
     "load_gist": true,
     "hide": false,
@@ -196,9 +199,11 @@
       "enable": true,
       "collapse": false,
       "dashboards": [
-        "nProbe Search",
-        "nProbe Statistics",
+        "nProbe - Flow Search",
+        "nProbe - Statistics",
         "nProbe - Logstash Search",
+        "nProbe - Proc Flows",
+        "nProbe - Applications",
         "nProbe - IP Flows",
         "nProbe - Geo Stats"
       ],
@@ -245,7 +250,7 @@
         "0": {
           "type": "time",
           "field": "@timestamp",
-          "from": "now-1h",
+          "from": "now-5m",
           "to": "now",
           "mandate": "must",
           "active": true,

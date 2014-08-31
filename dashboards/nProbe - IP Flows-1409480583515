@@ -1,0 +1,271 @@
+{
+  "index": {
+    "default": "_all",
+    "pattern": "[packetbeat-]YYYY.MM.DD",
+    "warm_fields": true,
+    "interval": "day"
+  },
+  "style": "light",
+  "rows": [
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Map",
+      "editable": true,
+      "height": "700px",
+      "panels": [
+        {
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "force",
+          "loadingEditor": false,
+          "spyable": true,
+          "size": 50,
+          "queries": {
+            "mode": "pinned",
+            "ids": [
+              0
+            ]
+          },
+          "src_field": "IPV4_SRC_ADDR",
+          "dst_field": "IPV4_DST_ADDR",
+          "title": "HOST/IP FLOW"
+        }
+      ]
+    },
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "General View",
+      "editable": true,
+      "height": "380px",
+      "panels": [
+        {
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "IPV4_SRC_ADDR",
+          "exclude": [],
+          "missing": false,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "Top IP SRC"
+        },
+        {
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "IPV4_DST_ADDR",
+          "exclude": [],
+          "missing": false,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "Top IP DST"
+        }
+      ]
+    },
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Response time",
+      "editable": true,
+      "height": "200px",
+      "panels": []
+    }
+  ],
+  "title": "nProbe - IP Flows",
+  "failover": true,
+  "editable": true,
+  "refresh": false,
+  "loader": {
+    "load_gist": false,
+    "hide": false,
+    "save_temp": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "save_temp_ttl": "30d",
+    "load_elasticsearch": true,
+    "save_local": true,
+    "save_temp_ttl_enable": true,
+    "save_elasticsearch": true,
+    "save_gist": false,
+    "save_default": true
+  },
+  "pulldowns": [
+    {
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "pinned": true,
+      "query": "*",
+      "history": [
+        "type:nProbe",
+        "type:nProbe AND L7_PROTO_NAME: 'HTTP'",
+        "*",
+        "type:http AND responsetime: [100 TO 100000]",
+        "type:http AND responsetime: [30 TO 50}",
+        "type:http AND responsetime: [50 TO 100}",
+        "type: http AND responsetime: [10 TO 30}",
+        "type: http AND responsetime: [0 TO 10}",
+        "type: http",
+        "type: mysql"
+      ],
+      "type": "query",
+      "remember": 10
+    },
+    {
+      "notice": true,
+      "enable": false,
+      "type": "filtering",
+      "collapse": false
+    }
+  ],
+  "nav": [
+    {
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "dashboards": [
+        "nProbe - IP Flows",
+        "nProbe - Statistics",
+        "nProbe - Flow Search",
+        "nProbe - Logstash Search",
+        "nProbe - Proc Flows",
+        "nProbe - Applications",
+        "nProbe - Geo Stats"
+      ],
+      "label": "Page: ",
+      "type": "dashboard_dropdown"
+    },
+    {
+      "status": "Stable",
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m"
+      ],
+      "filter_id": 0,
+      "timefield": "@timestamp",
+      "now": true,
+      "type": "timepicker"
+    }
+  ],
+  "services": {
+    "filter": {
+      "list": {
+        "0": {
+          "type": "time",
+          "field": "@timestamp",
+          "from": "now-1h",
+          "to": "now",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 0
+        }
+      },
+      "ids": [
+        0
+      ],
+      "idQueue": [
+        1,
+        2
+      ]
+    },
+    "query": {
+      "list": {
+        "0": {
+          "enable": true,
+          "pin": true,
+          "color": "#7EB26D",
+          "alias": "HTTP",
+          "query": "type:nProbe AND L7_PROTO_NAME: 'HTTP'",
+          "type": "lucene",
+          "id": 0
+        },
+        "6": {
+          "id": 6,
+          "color": "#BA43A9",
+          "alias": "",
+          "pin": true,
+          "type": "lucene",
+          "enable": false,
+          "query": "type:nProbe"
+        }
+      },
+      "ids": [
+        0,
+        6
+      ],
+      "idQueue": [
+        4
+      ]
+    }
+  },
+  "panel_hints": true
+}

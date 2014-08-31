@@ -1,0 +1,301 @@
+{
+  "index": {
+    "default": "_all",
+    "pattern": "[packetbeat-]YYYY.MM.DD",
+    "warm_fields": true,
+    "interval": "day"
+  },
+  "style": "light",
+  "rows": [
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Maps",
+      "editable": true,
+      "height": "400px",
+      "panels": [
+        {
+          "exclude": [],
+          "map": "world",
+          "span": 6,
+          "title": "Traffic distribution (SRC)",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              6
+            ]
+          },
+          "editable": true,
+          "field": "SRC_IP_COUNTRY",
+          "colors": [
+            "#A0E2E2",
+            "#265656"
+          ],
+          "index_limit": 0,
+          "error": false,
+          "spyable": true,
+          "loadingEditor": false,
+          "type": "map",
+          "size": 100
+        },
+        {
+          "exclude": [],
+          "map": "world",
+          "span": 6,
+          "title": "Traffic distribution (DST)",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              6
+            ]
+          },
+          "editable": true,
+          "field": "DST_IP_COUNTRY",
+          "colors": [
+            "#A0E2E2",
+            "#265656"
+          ],
+          "index_limit": 0,
+          "error": false,
+          "spyable": true,
+          "loadingEditor": false,
+          "type": "map",
+          "size": 100
+        }
+      ]
+    },
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "General View",
+      "editable": true,
+      "height": "200px",
+      "panels": [
+        {
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "SRC_IP_COUNTRY",
+          "exclude": [],
+          "missing": false,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              6
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "IP SRC"
+        },
+        {
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "DST_IP_COUNTRY",
+          "exclude": [],
+          "missing": false,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              6
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "IP DST"
+        }
+      ]
+    },
+    {
+      "notice": false,
+      "collapsable": true,
+      "collapse": false,
+      "title": "Response time",
+      "editable": true,
+      "height": "200px",
+      "panels": []
+    }
+  ],
+  "title": "nProbe - Geo Stats",
+  "failover": true,
+  "editable": true,
+  "refresh": false,
+  "loader": {
+    "load_gist": false,
+    "hide": false,
+    "save_temp": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "save_temp_ttl": "30d",
+    "load_elasticsearch": true,
+    "save_local": true,
+    "save_temp_ttl_enable": true,
+    "save_elasticsearch": true,
+    "save_gist": false,
+    "save_default": true
+  },
+  "pulldowns": [
+    {
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "pinned": true,
+      "query": "*",
+      "history": [
+        "*",
+        "type:nProbe",
+        "type:http AND responsetime: [100 TO 100000]",
+        "type:http AND responsetime: [50 TO 100}",
+        "type:http AND responsetime: [30 TO 50}",
+        "type: http AND responsetime: [10 TO 30}",
+        "type: http AND responsetime: [0 TO 10}",
+        "type: http",
+        "type: mysql",
+        "status: Error"
+      ],
+      "type": "query",
+      "remember": 10
+    },
+    {
+      "notice": true,
+      "enable": false,
+      "type": "filtering",
+      "collapse": false
+    }
+  ],
+  "nav": [
+    {
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "dashboards": [
+        "nProbe - Geo Stats",
+        "nProbe - Statistics",
+        "nProbe - Flow Search",
+        "nProbe - Logstash Search",
+        "nProbe - Proc Flows",
+        "nProbe - Applications",
+        "nProbe - IP Flows"
+      ],
+      "label": "Page: ",
+      "type": "dashboard_dropdown"
+    },
+    {
+      "status": "Stable",
+      "notice": false,
+      "enable": true,
+      "collapse": false,
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m"
+      ],
+      "filter_id": 0,
+      "timefield": "@timestamp",
+      "now": true,
+      "type": "timepicker"
+    }
+  ],
+  "services": {
+    "filter": {
+      "list": {
+        "0": {
+          "type": "time",
+          "field": "@timestamp",
+          "from": "now-1h",
+          "to": "now",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 0
+        }
+      },
+      "ids": [
+        0
+      ],
+      "idQueue": [
+        1,
+        2
+      ]
+    },
+    "query": {
+      "list": {
+        "6": {
+          "id": 6,
+          "color": "#BA43A9",
+          "alias": "nProbe",
+          "pin": true,
+          "type": "lucene",
+          "enable": true,
+          "query": "type:nProbe"
+        },
+        "12": {
+          "enable": false,
+          "pin": true,
+          "color": "#3F2B5B",
+          "alias": "all",
+          "query": "*",
+          "type": "lucene",
+          "id": 12
+        }
+      },
+      "ids": [
+        6,
+        12
+      ],
+      "idQueue": [
+        4
+      ]
+    }
+  },
+  "panel_hints": true
+}

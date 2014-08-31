@@ -11,57 +11,25 @@
       "notice": false,
       "collapsable": true,
       "collapse": false,
-      "title": "Maps",
+      "title": "Map",
       "editable": true,
       "height": "400px",
       "panels": [
         {
-          "exclude": [],
-          "map": "world",
-          "span": 6,
-          "title": "Traffic distribution (SRC)",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              6
-            ]
-          },
-          "editable": true,
-          "field": "SRC_IP_COUNTRY",
-          "colors": [
-            "#A0E2E2",
-            "#265656"
-          ],
-          "index_limit": 0,
           "error": false,
-          "spyable": true,
-          "loadingEditor": false,
-          "type": "map",
-          "size": 100
-        },
-        {
-          "exclude": [],
-          "map": "world",
-          "span": 6,
-          "title": "Traffic distribution (DST)",
-          "queries": {
-            "mode": "all",
-            "ids": [
-              6
-            ]
-          },
+          "span": 12,
           "editable": true,
-          "field": "DST_IP_COUNTRY",
-          "colors": [
-            "#A0E2E2",
-            "#265656"
-          ],
-          "index_limit": 0,
-          "error": false,
-          "spyable": true,
+          "type": "force",
           "loadingEditor": false,
-          "type": "map",
-          "size": 100
+          "spyable": true,
+          "size": 50,
+          "queries": {
+            "mode": "pinned",
+            "ids": []
+          },
+          "src_field": "SRC_PROC_NAME",
+          "dst_field": "DST_PROC_NAME",
+          "title": "PROCESS FLOW"
         }
       ]
     },
@@ -71,7 +39,7 @@
       "collapse": false,
       "title": "General View",
       "editable": true,
-      "height": "200px",
+      "height": "280px",
       "panels": [
         {
           "error": false,
@@ -79,7 +47,7 @@
           "editable": true,
           "type": "terms",
           "loadingEditor": false,
-          "field": "SRC_IP_COUNTRY",
+          "field": "SRC_PROC_NAME",
           "exclude": [],
           "missing": false,
           "other": true,
@@ -93,18 +61,16 @@
           "labels": true,
           "arrangement": "horizontal",
           "chart": "bar",
-          "counter_pos": "none",
+          "counter_pos": "above",
           "spyable": true,
           "queries": {
             "mode": "all",
-            "ids": [
-              6
-            ]
+            "ids": []
           },
           "tmode": "terms",
           "tstat": "total",
           "valuefield": "",
-          "title": "IP SRC"
+          "title": "TOP SRC  Procs"
         },
         {
           "error": false,
@@ -112,7 +78,7 @@
           "editable": true,
           "type": "terms",
           "loadingEditor": false,
-          "field": "DST_IP_COUNTRY",
+          "field": "DST_PROC_NAME",
           "exclude": [],
           "missing": false,
           "other": true,
@@ -126,32 +92,30 @@
           "labels": true,
           "arrangement": "horizontal",
           "chart": "bar",
-          "counter_pos": "none",
+          "counter_pos": "above",
           "spyable": true,
           "queries": {
             "mode": "all",
-            "ids": [
-              6
-            ]
+            "ids": []
           },
           "tmode": "terms",
           "tstat": "total",
           "valuefield": "",
-          "title": "IP DST"
+          "title": "TOP DST Procs"
         }
       ]
     },
     {
       "notice": false,
       "collapsable": true,
-      "collapse": false,
+      "collapse": true,
       "title": "Response time",
       "editable": true,
       "height": "200px",
       "panels": []
     }
   ],
-  "title": "nProbe - Geo Stats",
+  "title": "nProbe - Proc Flows",
   "failover": true,
   "editable": true,
   "refresh": false,
@@ -177,16 +141,16 @@
       "pinned": true,
       "query": "*",
       "history": [
-        "*",
         "type:nProbe",
+        "type:nProbe AND L7_PROTO_NAME: 'HTTP'",
+        "*",
         "type:http AND responsetime: [100 TO 100000]",
-        "type:http AND responsetime: [50 TO 100}",
         "type:http AND responsetime: [30 TO 50}",
+        "type:http AND responsetime: [50 TO 100}",
         "type: http AND responsetime: [10 TO 30}",
         "type: http AND responsetime: [0 TO 10}",
         "type: http",
-        "type: mysql",
-        "status: Error"
+        "type: mysql"
       ],
       "type": "query",
       "remember": 10
@@ -204,11 +168,13 @@
       "enable": true,
       "collapse": false,
       "dashboards": [
-        "nProbe - Geo Stats",
-        "nProbe Statistics",
-        "nProbe Search",
+        "nProbe - Proc Flows",
+        "nProbe - Statistics",
+        "nProbe - Flow Search",
         "nProbe - Logstash Search",
-        "nProbe - IP Flows"
+        "nProbe - Applications",
+        "nProbe - IP Flows",
+        "nProbe - Geo Stats"
       ],
       "label": "Page: ",
       "type": "dashboard_dropdown"
@@ -270,25 +236,15 @@
         "6": {
           "id": 6,
           "color": "#BA43A9",
-          "alias": "nProbe",
+          "alias": "",
           "pin": true,
           "type": "lucene",
-          "enable": true,
-          "query": "type:nProbe"
-        },
-        "12": {
           "enable": false,
-          "pin": true,
-          "color": "#3F2B5B",
-          "alias": "all",
-          "query": "*",
-          "type": "lucene",
-          "id": 12
+          "query": "type:nProbe"
         }
       },
       "ids": [
-        6,
-        12
+        6
       ],
       "idQueue": [
         4

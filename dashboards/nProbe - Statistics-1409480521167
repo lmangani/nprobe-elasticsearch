@@ -255,6 +255,146 @@
             "query_as_alias": true
           },
           "title": "OUT BYTES"
+        },
+        {
+          "height": "200px",
+          "chart": "pie",
+          "field": "IPV4_DST_ADDR",
+          "span": 3,
+          "type": "terms",
+          "title": "Top 10 IPV4 DST",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": ""
+        },
+        {
+          "height": "200px",
+          "chart": "pie",
+          "field": "L4_DST_PORT",
+          "span": 3,
+          "type": "terms",
+          "title": "Top 10 IPV4 DST Ports",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": ""
+        },
+        {
+          "height": "200px",
+          "chart": "pie",
+          "field": "IPV4_SRC_ADDR",
+          "span": 3,
+          "type": "terms",
+          "title": "Top 10 IPV4 SRC",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": ""
+        },
+        {
+          "height": "200px",
+          "chart": "pie",
+          "field": "L4_SRC_PORT",
+          "span": 3,
+          "type": "terms",
+          "title": "Top 10 IPV4 SRC Ports",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              17
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": ""
         }
       ]
     },
@@ -335,9 +475,18 @@
           "unit": "ms"
         }
       ]
+    },
+    {
+      "title": "Avgs",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [],
+      "notice": false
     }
   ],
-  "title": "nProbe Statistics",
+  "title": "nProbe - Statistics",
   "failover": true,
   "editable": true,
   "refresh": false,
@@ -390,9 +539,11 @@
       "enable": true,
       "collapse": false,
       "dashboards": [
-        "nProbe Statistics",
-        "nProbe Search",
+        "nProbe - Statistics",
+        "nProbe - Flow Search",
         "nProbe - Logstash Search",
+        "nProbe - Proc Flows",
+        "nProbe - Applications",
         "nProbe - IP Flows",
         "nProbe - Geo Stats"
       ],
