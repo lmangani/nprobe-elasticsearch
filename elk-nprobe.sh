@@ -1,9 +1,14 @@
 #!/bin/bash
 #
-# ntop.org & qxip.net - Experimental nProbe + ELK Installer
-# Description: This script will automatically install and configure nProbe + Logstash, Elasticsearch and Kibana3
+# ntop.org & qxip.net - Experimental nProbe + ELK Installer + nProbe custom dashboards
 #
-###############################################
+# Description: 
+#    This script will automatically install and configure nProbe + Logstash, Elasticsearch 
+#    and Kibana3 on a single node/server to facilitate testing and prototyping with nProbe. 
+#    The script also installs some nProbe specific dashboards as starting point for users.
+#
+#    THIS SCRIPT IS IN ALPHA STAGE: USE AT YOUR OWN RISK!
+
 
 CWD=$(pwd)
 
