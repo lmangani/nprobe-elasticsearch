@@ -163,11 +163,21 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             cd $CWD
             ./dashload.sh
             
+            echo "Installing maintenance scripts/tools for ES indexes..."
+            cd /usr/src
+            git clone https://github.com/QXIP/elasticsearch-logstash-index-mgmt
+            cp elasticsearch-logstash-index-mgmt/*.sh /usr/local/bin/
+            rm -rf elasticsearch-logstash-index-mgmt*
+            cd $CWD
+            cp -r 
+            
             # All Done
             localip=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
             echo "ELK Installation complete!"
             echo
             echo -e "Start nprobe and connect to http://$localip/kibana/#/dashboard/elasticsearch/Logstash%20Search"
+
+            
 
             ;;
         N|n|*)
