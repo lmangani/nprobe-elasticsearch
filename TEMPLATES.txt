@@ -1,0 +1,33 @@
+DEFAULT TEMPLATE:
+-----------------
+
+  This is the default nprobe template:
+
+  nprobe -T "%IPV4_SRC_ADDR %IPV4_DST_ADDR %IPV4_NEXT_HOP %INPUT_SNMP %OUTPUT_SNMP %IN_PKTS %IN_BYTES %FIRST_SWITCHED %LAST_SWITCHED %L4_SRC_PORT %L4_DST_PORT %TCP_FLAGS %PROTOCOL %SRC_TOS %SRC_AS %DST_AS %IPV4_SRC_MASK %IPV4_DST_MASK"
+
+
+HTTP PLUGIN TEMPLATE EXAMPLE:
+-----------------------------
+
+  This is the recommended and most efficient setup for the nProbe to process latency, 
+  MAC addresses and HTTP URLs. This setup will run three nProbe processes from one 
+  machine where each nProbe daemon will process only the necessary data 
+  (E.g. HTTP URL information will only be processed for traffic on port 80 traffic).  
+  
+  This helps speed up processing time and will reduce the amount of disk space required 
+  to store the nProbe data. You MUST run all three of the following nProbe processes for 
+  this setup to work properly.
+  
+  ./nprobe -f "!tcp" -a -i eth0 -t 60 -d 15 -T "%IPV4_SRC_ADDR %IPV4_DST_ADDR %IPV4_NEXT_HOP %INPUT_SNMP %OUTPUT_SNMP %IN_PKTS %L4_DST_PORT %L4_SRC_PORT %IN_BYTES %FIRST_SWITCHED %LAST_SWITCHED %PROTOCOL %IPV4_SRC_MASK %IPV4_DST_MASK %IN_SRC_MAC %OUT_DST_MAC" -G
+  
+  ./nprobe -f "tcp and !(port 80)" -a -i eth0 -t 60 -d 15 -T "%IPV4_SRC_ADDR %IPV4_DST_ADDR %IPV4_NEXT_HOP %INPUT_SNMP %OUTPUT_SNMP %IN_PKTS %L4_DST_PORT %L4_SRC_PORT %IN_BYTES %FIRST_SWITCHED %LAST_SWITCHED %PROTOCOL %IPV4_SRC_MASK %IPV4_DST_MASK %IN_SRC_MAC %OUT_DST_MAC %TCP_FLAGS %CLIENT_NW_DELAY_MS %SERVER_NW_DELAY_MS %APPL_LATENCY_MS" -G
+  
+  ./nprobe -f "tcp and port 80" -a -i eth0 -t 60 -d 15 -T "%IPV4_SRC_ADDR %IPV4_DST_ADDR %IPV4_NEXT_HOP %INPUT_SNMP %OUTPUT_SNMP %IN_PKTS %L4_DST_PORT %L4_SRC_PORT %IN_BYTES %FIRST_SWITCHED %LAST_SWITCHED %PROTOCOL %IPV4_SRC_MASK %IPV4_DST_MASK %IN_SRC_MAC %OUT_DST_MAC %TCP_FLAGS %CLIENT_NW_DELAY_MS %SERVER_NW_DELAY_MS %APPL_LATENCY_MS %HTTP_URL %HTTP_RET_CODE %HTTP_REFERER %HTTP_UA %HTTP_MIME" -G
+  
+  
+SIP/RTP PLUGIN TEMPLATE EXAMPLE:
+--------------------------------
+
+  This is the recommended template to use with SIP/RTP plugins, using JSON output format for reports
+
+  nprobe --redis 127.0.0.1 --drop-flow-no-plugin -i any -b 0 --json-labels --tcp {ELK}:5656 -t 30 -T "%FIRST_SWITCHED %IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %RTP_IN_JITTER %RTP_OUT_JITTER %RTP_IN_PKT_LOST %RTP_OUT_PKT_LOST %RTP_IN_PAYLOAD_TYPE %RTP_OUT_PAYLOAD_TYPE %SIP_CALL_STATE %RTP_SIP_CALL_ID %SIP_CALL_ID %IN_PKTS %OUT_PKTS %IN_BYTES %OUT_BYTES %RTP_IN_TRANSIT %RTP_OUT_TRANSIT %RTP_RTT %SIP_CALLING_PARTY %SIP_CALLED_PARTY %SIP_REASON_CAUSE %L7_PROTO_NAME" -G
