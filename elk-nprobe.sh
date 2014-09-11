@@ -56,17 +56,17 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
         Y|y)
             # OS IF
             if [ "$OS" == "Ubuntu" ]; then
-                echo 'Installing nProbe from ntop Ubuntu repository...'
-                echo "deb http://www.nmon.net/apt x64" > /etc/apt/sources.list.d/ntop.list
-                echo "deb http://www.nmon.net/apt all" >> /etc/apt/sources.list.d/ntop.list
-                wget -O - http://www.nmon.net/apt/ntop.key | apt-key add -
+                lsb=$(lsb_release -r | awk '{print $2}');
+                echo 'Installing nProbe from ntop Ubuntu $lsb repository...'
+                /bin/echo -e "deb http://www.nmon.net/apt-stable/$lsb/ x64/\ndeb http://www.nmon.net/apt-stable/$lsb/ all/" > /etc/apt/sources.list.d/ntop.list
+                wget -qO - http://www.nmon.net/apt-stable/ntop.key | sudo apt-key add -
                 sudo apt-get update
-                apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev
-                sudo apt-get install nprobe
+                sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
+                sudo apt-get install pfring nprobe
             elif [ "$OS" == "Debian" ]; then
                 echo 'Installing nProbe for stock Debian (+ static libs)...'
                 apt-get install build-essential automake autoconf libtool alien
-                apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev
+                apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
                 ######### manually install zeromq3 #################
                 cd /usr/src
                 wget http://download.zeromq.org/zeromq-3.2.4.tar.gz
