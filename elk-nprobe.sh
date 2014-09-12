@@ -62,14 +62,14 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
                 # use new ntop ubuntu deb package
                 echo 'Installing nProbe from ntop Ubuntu $lsb repository...'
-                wget http://www.nmon.net/apt/$lsb/all/apt-ntop.deb
+                sudo wget http://www.nmon.net/apt/$lsb/all/apt-ntop.deb
                 sudo dpkg -i apt-ntop.deb
                 sudo apt-get install pfring nprobe
                 echo "## Would you like to install ZC drivers? [Y/n]: "
                 read  setZC
                 case $setZC in
                     Y|y)
-                    apt-get install pfring-drivers-zc-dkms
+                    sudo apt-get install pfring-drivers-zc-dkms
                     ;;
                     N|n|*)
                     echo
@@ -79,7 +79,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 read  setZC
                 case $setZC in
                     Y|y)
-                    apt-get install pfring-drivers-dna-dkms
+                    sudo apt-get install pfring-drivers-dna-dkms
                     ;;
                     N|n|*)
                     echo
