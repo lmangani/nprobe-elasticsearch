@@ -7,7 +7,7 @@ else
 fi
 ELASTICSEARCH=http://$_ELASTICHOST:9200/
 
-for file in dashboards/*.json
+for file in generate/*.json
 do
     name=`basename $file .json`
     echo "Loading $name: "
