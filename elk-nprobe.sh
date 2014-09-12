@@ -131,7 +131,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                     wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
                     wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
                     gunzip Geo*
-                    if [ ! -d /usr/local/nprobe ]; then
+                    if [ ! -d "/usr/local/nprobe" ]; then
                         mkdir /usr/local/nprobe
                     fi
                     mv Geo*.dat /usr/local/nprobe/
@@ -195,7 +195,7 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             # sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
             echo 'Create grok pattern folder'
-            if [ ! -d /etc/logstash/patterns ]; then
+            if [ ! -d "/etc/logstash/patterns" ]; then
                 $sudo mkdir -p /etc/logstash/patterns
             fi
             cd /tmp
@@ -214,7 +214,7 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             elif [ "$OS" == "Ubuntu" ]; then
                 $sudo git clone https://github.com/packetbeat/kibana.git kibana
                 $sudo mkdir /var/www/html/kibana
-                $sudo mv kibana/src/* /var/www/kibana
+                $sudo mv kibana/src/* /var/www/html/kibana
             fi
             ############################# nprobe ELK ################################
             echo 'Configuring nProbe ELK...'
