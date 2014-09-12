@@ -161,8 +161,8 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
             cd /usr/src
-            $sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
-            $sudo echo 'deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main' > /etc/apt/sources.list.d/elk.list
+            $sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+            $sudo echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' > /etc/apt/sources.list.d/elk.list
             $sudo echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
             $sudo apt-get update
             $sudo apt-get install elasticsearch logstash
