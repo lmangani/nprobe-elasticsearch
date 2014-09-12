@@ -150,21 +150,23 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             # ubuntu 
             if [ "$OS" == "Ubuntu" ]; then
             echo 'Installing required ubuntu packages...'
+            sudo='sudo'
                 sudo apt-get update
                 sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             elif [ "$OS" == "Debian" ]; then
             echo 'Installing required debian packages...'
-                apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+            sudo=''
+                sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             fi
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
             cd /usr/src
-            wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
-            echo 'deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main' > /etc/apt/sources.list.d/elk.list
-            echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
-            apt-get update
-            apt-get install elasticsearch logstash
-            sudo update-rc.d elasticsearch defaults 95 10
+            $sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
+            $sudo echo 'deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main' > /etc/apt/sources.list.d/elk.list
+            $sudo echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
+            $sudo apt-get update
+            $sudo apt-get install elasticsearch logstash
+            $sudo update-rc.d elasticsearch defaults 95 10
             echo 'Configuring Elasticsearch'
             # sed -i '$a\cluster.name: elk' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\node.name: "elastic-master"' /etc/elasticsearch/elasticsearch.yml
@@ -179,28 +181,28 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             # sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
             echo 'Create grok pattern folder'
-            mkdir -p /etc/logstash/patterns
+            $sudo mkdir -p /etc/logstash/patterns
             cd /tmp
             git clone https://github.com/logstash/logstash
-            cp logstash/patterns/* /etc/logstash/patterns/
+            $sudo cp logstash/patterns/* /etc/logstash/patterns/
             rm -rf logstash
             echo 'Remember to set you patterns_dir to "/etc/logstash/patterns" (i.e. patterns_dir => "/etc/logstash/patterns")'
             ################################# Kibana ################################
             echo 'Installing the Kibana frontend...'
             cd /usr/src
             # We use the Packetbeat fork in this version
-            git clone https://github.com/packetbeat/kibana.git kibana
-            mkdir /var/www/kibana
-            mv kibana/src/* /var/www/kibana
+            $sudo git clone https://github.com/packetbeat/kibana.git kibana
+            $sudo mkdir /var/www/kibana
+            $sudo mv kibana/src/* /var/www/kibana
             ############################# nprobe ELK ################################
             echo 'Configuring nProbe ELK...'
             cd $CWD
-            cp logstash/conf.d/* /etc/logstash/conf.d/
+            $sudo cp logstash/conf.d/* /etc/logstash/conf.d/
             
             
             echo 'Restarting ELK..'
-            service logstash restart
-            service elasticsearch restart
+            $sudo service logstash restart
+            $sudo service elasticsearch restart
             
             # Let's give it a sec to start
             echo "Waiting for services to start... "
@@ -208,15 +210,15 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             
             echo "Installing custom Kibana Dashboards..."
             cd $CWD
-            ./dashload.sh
+            $sudo ./dashload.sh
             
             echo "Installing maintenance scripts/tools for ES indexes..."
             cd /usr/src
             git clone https://github.com/QXIP/elasticsearch-logstash-index-mgmt
-            cp elasticsearch-logstash-index-mgmt/*.sh /usr/local/bin/
+            $sudo cp elasticsearch-logstash-index-mgmt/*.sh /usr/local/bin/
             rm -rf elasticsearch-logstash-index-mgmt*
             cd $CWD
-            cp -r 
+            #cp -r 
             
             # All Done
             localip=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
