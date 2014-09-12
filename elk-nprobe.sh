@@ -84,15 +84,26 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                     ;;
                 esac
     
-                echo "Installing Maxmind GeoIP...."
-                cd /tmp
-                #wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
-                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
-                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-                #wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
-                gunzip Geo*
-                sudo mkdir /usr/local/nprobe
-                sudo mv Geo*.dat /usr/local/nprobe/
+                echo "## Would you like to install Maxmind GeoIP data files? [y/N]: "
+                read  setMAX
+                case $setMAX in
+                    Y|y)
+                    echo "Installing Maxmind GeoIP...."
+                    cd /tmp
+                    #wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
+                    wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
+                    wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+                    #wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
+                    gunzip Geo*
+                    if [ ! -d "/usr/local/nprobe" ]; then
+                        sudo mkdir /usr/local/nprobe
+                    fi
+                    sudo mv Geo*.dat /usr/local/nprobe/
+                    ;;
+                    n|N|*)
+                    echo "Skipping Maxmind..."
+                    ;;
+                esac
                 
             elif [ "$OS" == "Debian" ]; then
                 echo 'Installing base packages...'
