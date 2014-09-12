@@ -57,9 +57,6 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
             # OS IF
             if [ "$OS" == "Ubuntu" ]; then
                 lsb=$(lsb_release -r | awk '{print $2}');
-                echo 'Installing base packages...'
-                sudo apt-get update
-                sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
                 # use new ntop ubuntu deb package
                 echo 'Installing nProbe from ntop Ubuntu $lsb repository...'
                 sudo wget http://www.nmon.net/apt/$lsb/all/apt-ntop.deb
@@ -89,8 +86,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 
             elif [ "$OS" == "Debian" ]; then
                 echo 'Installing base packages...'
-                apt-get install build-essential automake autoconf libtool alien
-                apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
+                apt-get install -y --force yes build-essential automake autoconf libtool alien git
                 echo 'Installing nProbe for stock Debian (+ static libs)...'
                 ######### manually install zeromq3 #################
                 cd /usr/src
@@ -139,6 +135,15 @@ echo "## Would you like to install a local ELK? [Y/n]: "
     case $setELK in
         Y|y)
             echo "Installing ELK...."
+            # ubuntu 
+            if [ "$OS" == "Ubuntu" ]; then
+            echo 'Installing required ubuntu packages...'
+                sudo apt-get update
+                sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+            elif [ "$OS" == "Debian" ]; then
+            echo 'Installing required debian packages...'
+                apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+            fi
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
             cd /usr/src
