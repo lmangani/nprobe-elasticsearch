@@ -57,16 +57,40 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
             # OS IF
             if [ "$OS" == "Ubuntu" ]; then
                 lsb=$(lsb_release -r | awk '{print $2}');
-                echo 'Installing nProbe from ntop Ubuntu $lsb repository...'
-                /bin/echo -e "deb http://www.nmon.net/apt-stable/$lsb/ x64/\ndeb http://www.nmon.net/apt-stable/$lsb/ all/" > /etc/apt/sources.list.d/ntop.list
-                wget -qO - http://www.nmon.net/apt-stable/ntop.key | sudo apt-key add -
+                echo 'Installing base packages...'
                 sudo apt-get update
                 sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
+                # use new ntop ubuntu deb package
+                echo 'Installing nProbe from ntop Ubuntu $lsb repository...'
+                wget http://www.nmon.net/apt/$lsb/all/apt-ntop.deb
+                sudo dpkg -i apt-ntop.deb
                 sudo apt-get install pfring nprobe
+                echo "## Would you like to install ZC drivers? [Y/n]: "
+                read  setZC
+                case $setZC in
+                    Y|y)
+                    apt-get install pfring-drivers-zc-dkms
+                    ;;
+                    N|n|*)
+                    echo
+                    ;;
+                esac
+                echo "## Would you like to install DNA drivers? [Y/n]: "
+                read  setZC
+                case $setZC in
+                    Y|y)
+                    apt-get install pfring-drivers-dna-dkms
+                    ;;
+                    N|n|*)
+                    echo
+                    ;;
+                esac
+                
             elif [ "$OS" == "Debian" ]; then
-                echo 'Installing nProbe for stock Debian (+ static libs)...'
+                echo 'Installing base packages...'
                 apt-get install build-essential automake autoconf libtool alien
                 apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev git apache2 libzmq-dev redis-server
+                echo 'Installing nProbe for stock Debian (+ static libs)...'
                 ######### manually install zeromq3 #################
                 cd /usr/src
                 wget http://download.zeromq.org/zeromq-3.2.4.tar.gz
