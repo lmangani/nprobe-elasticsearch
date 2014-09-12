@@ -25,8 +25,8 @@ If you have an existing ES setup and nProbe license, you can download and import
 The entire setup has been automated for Ubuntu and Debian. Simply run the following commands:
 
 ```
-$ git clone https://github.com/lmangani/nprobe-ELK.git
-$ cd nprobe-ELK
+$ git clone https://github.com/lmangani/nprobe-elasticsearch
+$ cd nprobe-elastichsearch
 $ chmod +x elk-nprobe.sh
 $ sudo ./elk-nprobe.sh
 ```
