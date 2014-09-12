@@ -83,6 +83,16 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                     echo
                     ;;
                 esac
+    
+                echo "Installing Maxmind GeoIP...."
+                cd /tmp
+                #wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
+                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
+                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+                #wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
+                gunzip Geo*
+                sudo mkdir /usr/local/nprobe
+                sudo mv Geo*.dat /usr/local/nprobe/
                 
             elif [ "$OS" == "Debian" ]; then
                 echo 'Installing base packages...'
@@ -109,17 +119,19 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nProbe/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
                 wget http://www.nmon.net/packages/rpm/x64/nProbe/$latest
                 alien -i $latest
+                
+                echo "Installing Maxmind GeoIP...."
+                cd /tmp
+                wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
+                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
+                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+                wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
+                gunzip Geo*
+                mkdir /usr/local/nprobe
+                mv Geo*.dat /usr/local/nprobe/
             fi
             # END IF
-            echo "Installing Maxmind GeoIP...."
-            cd /tmp
-            wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
-            wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
-            wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-            wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
-            gunzip Geo*
-            mkdir /usr/local/nprobe
-            mv Geo*.dat /usr/local/nprobe/
+            
             
             echo "nProbe Installation complete!"
             echo
