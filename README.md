@@ -7,6 +7,7 @@ This project brings nProbe metrics into ELK stack(s) for usage, development, dat
 ## What is ELK?
 [Elasticsearch-Logstash-Kibana Stack (elasticsearch.org)](http://www.elasticsearch.org/overview/)
 
+
 ## Setup
 
 The provided script(s) will :
@@ -16,7 +17,10 @@ The provided script(s) will :
 - Configure Logstash to receive/parse nProbe JSON (TCP port 5656)
 - Install custom Kibana Dashboards for nProbe metrics (/dashboards)
 
+#### Note for Existing ES/nProbe users:
+If you have an existing ES setup and nProbe license, you can download and import the nprobe dashboards to your Kibana without using the script.
 
+#### New Users/Blank Setup:
 
 The entire setup has been automated for Ubuntu and Debian. Simply run the following commands:
 
@@ -46,3 +50,6 @@ $ nprobe -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %
 - Add proper management/restart of ELK services in single-node
 - HA/Distributed setup (coming soon)
 - More Dashboards! (contributions/ideas are welcome)
+
+
+
