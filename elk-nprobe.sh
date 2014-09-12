@@ -120,17 +120,26 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 wget http://www.nmon.net/packages/rpm/x64/nProbe/$latest
                 alien -i $latest
                 
-                echo "Installing Maxmind GeoIP...."
-                cd /tmp
-                wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
-                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
-                wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-                wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
-                gunzip Geo*
-                if [ ! -d /usr/local/nprobe ]; then
-                    mkdir /usr/local/nprobe
-                fi
-                mv Geo*.dat /usr/local/nprobe/
+                echo "## Would you like to install Maxmind GeoIP data files? [y/N]: "
+                read  setMAX
+                case $setMAX in
+                    Y|y)
+                    echo "Installing Maxmind GeoIP...."
+                    cd /tmp
+                    wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNumv6.dat.gz
+                    wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
+                    wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+                    wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
+                    gunzip Geo*
+                    if [ ! -d /usr/local/nprobe ]; then
+                        mkdir /usr/local/nprobe
+                    fi
+                    mv Geo*.dat /usr/local/nprobe/
+                    ;;
+                    n|N|*)
+                    echo "Skipping Maxmind..."
+                    ;;
+                esac
             fi
             # END IF
             
@@ -157,7 +166,7 @@ echo "## Would you like to install a local ELK? [Y/n]: "
                 sudo add-apt-repository 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main'
                 sudo add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' 
                 sudo apt-get update
-                sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+                sudo apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             elif [ "$OS" == "Debian" ]; then
             echo 'Installing required debian packages...'
                 sudo=''
@@ -165,7 +174,7 @@ echo "## Would you like to install a local ELK? [Y/n]: "
                 echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' > /etc/apt/sources.list.d/elk.list
                 echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
                 apt-get update
-                sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+                sudo apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             fi
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
@@ -190,10 +199,10 @@ echo "## Would you like to install a local ELK? [Y/n]: "
                 $sudo mkdir -p /etc/logstash/patterns
             fi
             cd /tmp
-            git clone https://github.com/logstash/logstash
-            $sudo cp logstash/patterns/* /etc/logstash/patterns/
-            rm -rf logstash
-            echo 'Remember to set you patterns_dir to "/etc/logstash/patterns" (i.e. patterns_dir => "/etc/logstash/patterns")'
+            # git clone https://github.com/logstash/logstash
+            # $sudo cp logstash/patterns/* /etc/logstash/patterns/
+            # rm -rf logstash
+            # echo 'Remember to set you patterns_dir to "/etc/logstash/patterns" (i.e. patterns_dir => "/etc/logstash/patterns")'
             ################################# Kibana ################################
             echo 'Installing the Kibana frontend...'
             cd /usr/src
@@ -227,9 +236,9 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             
             echo "Installing maintenance scripts/tools for ES indexes..."
             cd /usr/src
-            git clone https://github.com/QXIP/elasticsearch-logstash-index-mgmt
+            $sudo git clone https://github.com/QXIP/elasticsearch-logstash-index-mgmt
             $sudo cp elasticsearch-logstash-index-mgmt/*.sh /usr/local/bin/
-            rm -rf elasticsearch-logstash-index-mgmt*
+            $sudo rm -rf elasticsearch-logstash-index-mgmt*
             cd $CWD
             #cp -r 
             
