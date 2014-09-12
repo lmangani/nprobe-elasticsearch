@@ -67,7 +67,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 read  setZC
                 case $setZC in
                     Y|y)
-                    sudo apt-get install pfring-drivers-zc-dkms
+                    sudo apt-get install -y --force-yes pfring-drivers-zc-dkms
                     ;;
                     N|n|*)
                     echo
@@ -77,7 +77,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 read  setZC
                 case $setZC in
                     Y|y)
-                    sudo apt-get install pfring-drivers-dna-dkms
+                    sudo apt-get install -y --force-yes pfring-drivers-dna-dkms
                     ;;
                     N|n|*)
                     echo
@@ -106,7 +106,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 ./configure
                 ./make && make install
                 ########## semi-manual installation of the static requirements #########
-                apt-get install libmysqlclient-dev libssl-dev libnuma-dev
+                apt-get install -y --force-yes libmysqlclient-dev libssl-dev libnuma-dev
                 ln -s /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18 /usr/lib/x86_64-linux-gnu/libmysqlclient.so.16
                 ln -s /usr/lib/x86_64-linux-gnu/libssl.so.1.0.0 /usr/lib/x86_64-linux-gnu/libssl.so.10
                 ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.0 /usr/lib/x86_64-linux-gnu/libcrypto.so.10
@@ -170,7 +170,7 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
             cd /usr/src
-            $sudo apt-get install elasticsearch logstash
+            $sudo apt-get install -y --force-yes elasticsearch logstash
             $sudo update-rc.d elasticsearch defaults 95 10
             echo 'Configuring Elasticsearch'
             # sed -i '$a\cluster.name: elk' /etc/elasticsearch/elasticsearch.yml
