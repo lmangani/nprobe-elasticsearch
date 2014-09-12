@@ -127,7 +127,9 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
                 wget http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
                 gunzip Geo*
-                mkdir /usr/local/nprobe
+                if [ ! -f /usr/local/nprobe ]; then
+                    mkdir /usr/local/nprobe
+                fi
                 mv Geo*.dat /usr/local/nprobe/
             fi
             # END IF
