@@ -186,7 +186,9 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             # sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
             echo 'Create grok pattern folder'
-            $sudo mkdir -p /etc/logstash/patterns
+            if [ ! -d /etc/logstash/patterns ]; then
+                $sudo mkdir -p /etc/logstash/patterns
+            fi
             cd /tmp
             git clone https://github.com/logstash/logstash
             $sudo cp logstash/patterns/* /etc/logstash/patterns/
@@ -196,9 +198,15 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             echo 'Installing the Kibana frontend...'
             cd /usr/src
             # We use the Packetbeat fork in this version
-            $sudo git clone https://github.com/packetbeat/kibana.git kibana
-            $sudo mkdir /var/www/kibana
-            $sudo mv kibana/src/* /var/www/kibana
+            if [ "$OS" == "Debian" ]; then
+                $sudo git clone https://github.com/packetbeat/kibana.git kibana
+                $sudo mkdir /var/www/kibana
+                $sudo mv kibana/src/* /var/www/kibana
+            elif [ "$OS" == "Ubuntu" ]; then
+                $sudo git clone https://github.com/packetbeat/kibana.git kibana
+                $sudo mkdir /var/www/html/kibana
+                $sudo mv kibana/src/* /var/www/kibana
+            fi
             ############################# nprobe ELK ################################
             echo 'Configuring nProbe ELK...'
             cd $CWD
