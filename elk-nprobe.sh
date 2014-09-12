@@ -153,20 +153,23 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             if [ "$OS" == "Ubuntu" ]; then
             echo 'Installing required ubuntu packages...'
             sudo='sudo'
+                sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+                sudo add-apt-repository 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main'
+                sudo add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' 
                 sudo apt-get update
                 sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             elif [ "$OS" == "Debian" ]; then
             echo 'Installing required debian packages...'
-            sudo=''
+                sudo=''
+                wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+                echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' > /etc/apt/sources.list.d/elk.list
+                echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
+                apt-get update
                 sudo apt-get install -y --force-yes default-jdk rubygems ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             fi
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
             cd /usr/src
-            $sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
-            $sudo echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' > /etc/apt/sources.list.d/elk.list
-            $sudo echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
-            $sudo apt-get update
             $sudo apt-get install elasticsearch logstash
             $sudo update-rc.d elasticsearch defaults 95 10
             echo 'Configuring Elasticsearch'
