@@ -64,6 +64,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 echo 'Installing nProbe from ntop Ubuntu $lsb repository...'
                 sudo wget http://www.nmon.net/apt/$lsb/all/apt-ntop.deb
                 sudo dpkg -i apt-ntop.deb
+                sudo apt-get update
                 sudo apt-get install pfring nprobe
                 echo "## Would you like to install ZC drivers? [Y/n]: "
                 read  setZC
