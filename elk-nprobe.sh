@@ -247,6 +247,11 @@ echo "## Would you like to install a local ELK? [y/N]: "
             echo "Installing custom Kibana Dashboards..."
             cd $CWD
             $sudo ./dashload.sh
+            # set default dashboard to nProbe 
+            regdef='^[ \t]*default_route[ \t]*:.*'
+            newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Statistics",'
+            $sudo sed -i "s#$regdef#$newdef#g" /var/www/kibana/config.js
+
             
             echo "Installing maintenance scripts/tools for ES indexes..."
             cd /usr/src
