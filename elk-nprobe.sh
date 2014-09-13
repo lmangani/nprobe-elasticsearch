@@ -10,6 +10,7 @@
 #
 #    THIS SCRIPT IS IN ALPHA STAGE: USE AT YOUR OWN RISK!
 
+VERS='1.03'
 
 CWD=$(pwd)
 
@@ -48,7 +49,7 @@ echo " :::::::::::::::::::::::::::::::::   :::::::::::::,. "
 echo " :::::::::::::::::::::::::::::::::  .:::::::::::::,. "
 echo "  ,::::::::::::::::::::::::::::::::::::::::::::::,.  "
 echo
-echo "   ntop.org - Experimental nProbe + ELK Installer"
+echo "   ntop.org - Local nProbe + ELK Installer (v$VERS)"
 echo "              os: $OS/$VER"
 echo
 echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
