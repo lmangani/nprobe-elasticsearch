@@ -63,6 +63,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
                 sudo dpkg -i apt-ntop.deb
                 sudo apt-get update
                 sudo apt-get install -y --force-yes pfring nprobe
+                sudo rm -rf ./apt-ntop.deb
                 echo "## Would you like to install ZC drivers? [Y/n]: "
                 read  setZC
                 case $setZC in
