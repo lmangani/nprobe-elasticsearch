@@ -50,7 +50,7 @@ echo
 echo "   ntop.org - Experimental nProbe + ELK Installer"
 echo "              os: $OS/$VER"
 echo
-echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
+echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
     read  setNPROBE
     case $setNPROBE in
         Y|y)
@@ -165,7 +165,7 @@ echo "## Would you like to install nProbe (unlicensed)? [Y/n]: "
             ;;
     esac
 
-echo "## Would you like to install a local ELK? [Y/n]: "
+echo "## Would you like to install a local ELK? [y/N]: "
     read  setELK
     case $setELK in
         Y|y)
@@ -272,5 +272,18 @@ echo "## Would you like to install a local ELK? [Y/n]: "
             fi
             ;;
     esac
+    
+    echo "## Would you like to start a local nProbe w/ default template? [y/N]: "
+        read  startNP
+        case $startNP in
+            Y|y)
+                echo "Starting nProbe in background..."
+                $sudo nprobe -b 0 -i any --json-labels -t 30 --tcp 127.0.0.1:5656 -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %HTTP_SITE %HTTP_RET_CODE %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE %SRC_IP_COUNTRY %DST_IP_COUNTRY %APPL_LATENCY_MS" -G
+                ;;
+            N|n|*)
+                echo "Do not forget to manually start nProbe to start injecting data to your ELK."
+                ;;
+        esac
+echo
 echo "## All Done! Exiting..."
 exit 0;
