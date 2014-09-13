@@ -5,7 +5,8 @@
 # Description: 
 #    This script will automatically install and configure nProbe + Logstash, Elasticsearch 
 #    and Kibana3 on a single node/server to facilitate testing and prototyping with nProbe. 
-#    The script also installs some nProbe specific dashboards as starting point for users.
+#    The script also installs some nProbe specific dashboards as starting point for users
+#    to begin modeling their own datasets and dashboards based on nProbe generated metrics.
 #
 #    THIS SCRIPT IS IN ALPHA STAGE: USE AT YOUR OWN RISK!
 
