@@ -46,9 +46,8 @@ $ nprobe -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %
 ```
 
 
-## ToDo:
-- Add proper management/restart of ELK services in single-node
-- HA/Distributed setup (coming soon)
+## Todo:
+- HA/Distributed setup / docker (coming soon)
 - More Dashboards! (contributions/ideas are welcome)
 
 
