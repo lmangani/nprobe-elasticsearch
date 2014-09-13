@@ -196,24 +196,42 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo apt-get install -y --force-yes elasticsearch logstash
             $sudo update-rc.d elasticsearch defaults 95 10
             echo 'Configuring Elasticsearch'
-            # sed -i '$a\cluster.name: elk' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\node.name: "elastic-master"' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\node.master: true' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\node.data: true' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\path.data: /var/data/elasticsearch' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\path.work: /var/data/elasticsearch/tmp' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\path.logs: /var/log/elasticsearch' /etc/elasticsearch/elasticsearch.yml
+            if [[ !-d "/var/data" ]]; then  
+                $sudo mkdir /var/data/
+            fi
+            if [[ !-d "/var/data/elasticsearch" ]]; then  
+                $sudo mkdir /var/data/elasticsearch
+            fi
+            if [[ !-d "/var/data/elasticsearch/tmp" ]]; then  
+                $sudo mkdir /var/data/elasticsearch/tmp
+            fi
+            $sudo chmod -r 775 /var/data/elasticsearch
+            # adjust settings for single nodes
+            $sudo cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bak
+            regexp='^[ \t]*index.number_of_shards[ \t]*:.*'
+            line='index.number_of_shards: 1'
+            $sudo sed -i "s#$regexp#$line#g" /tmp/elconf.yml
+            regexp='^[ \t]*index.number_of_replicas[ \t]*:.*'
+            line='index.number_of_replicas: 0'
+            $sudo sed -i "s#$regexp#$line#g" /tmp/elconf.yml
+            $sudo sed -i '$a\cluster.name: elk' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\node.name: "elastic-master"' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\node.master: true' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\node.data: true' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\path.data: /var/data/elasticsearch' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\path.work: /var/data/elasticsearch/tmp' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\path.logs: /var/log/elasticsearch' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\index.number_of_shards: 1' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\index.number_of_replicas: 0' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\discovery.zen.ping.multicast.enabled: false' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
-
-            echo 'Create grok pattern folder'
-            if [ ! -d "/etc/logstash/patterns" ]; then
-                $sudo mkdir -p /etc/logstash/patterns
-            fi
+            $sudo sed -i '$a\discovery.zen.ping.multicast.enabled: false' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
             cd /tmp
+
+            # echo 'Create grok pattern folder'
+            # if [ ! -d "/etc/logstash/patterns" ]; then
+            #     $sudo mkdir -p /etc/logstash/patterns
+            # fi
             # git clone https://github.com/logstash/logstash
             # $sudo cp logstash/patterns/* /etc/logstash/patterns/
             # rm -rf logstash
