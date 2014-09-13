@@ -208,6 +208,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             # sed -i '$a\discovery.zen.ping.multicast.enabled: false' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
             # sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
+
             echo 'Create grok pattern folder'
             if [ ! -d "/etc/logstash/patterns" ]; then
                 $sudo mkdir -p /etc/logstash/patterns
@@ -235,6 +236,9 @@ echo "## Would you like to install a local ELK? [y/N]: "
             cd $CWD
             $sudo cp logstash/conf.d/* /etc/logstash/conf.d/
             
+            # Sys. Misc Optimize
+            $sudo ulimit -l unlimited
+            $sudo ulimit -n 999999 
             
             echo 'Restarting ELK..'
             $sudo service logstash restart
@@ -265,7 +269,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             localip=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
             echo "ELK Installation complete!"
             echo
-            echo -e "Start nprobe and connect to http://$localip/kibana/#/dashboard/elasticsearch/Logstash%20Search"
+            echo -e "Start nprobe and connect to http://$localip/kibana"
 
             
 
@@ -288,7 +292,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
                 $sudo nprobe -b 0 -i any --json-labels -t 30 --tcp 127.0.0.1:5656 -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %HTTP_SITE %HTTP_RET_CODE %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE %SRC_IP_COUNTRY %DST_IP_COUNTRY %APPL_LATENCY_MS" -G
                 ;;
             N|n|*)
-                echo "Do not forget to manually start nProbe to start injecting data to your ELK."
+                echo "Do not forget to start a local or remote nProbe to start injecting data to your ELK."
                 ;;
         esac
 echo
