@@ -17,10 +17,10 @@ The provided script(s) will :
 - Configure Logstash to receive/parse nProbe JSON (TCP port 5656)
 - Install custom Kibana Dashboards for nProbe metrics (/dashboards)
 
-#### Note for Existing ES/nProbe users:
-If you have an existing ES setup and nProbe license, you can download and import the nprobe dashboards to your Kibana without using the script.
+#### Note for Existing ELK/nProbe users:
+If you have an existing ELK setup you wish to integrate with nProbe reports, you can download and import the template dashboards/ to your Kibana without using the script.
 
-#### New Users/Blank Setup:
+#### New Users/Fresh Setup:
 
 The entire setup has been automated for Ubuntu and Debian. Simply run the following commands:
 
