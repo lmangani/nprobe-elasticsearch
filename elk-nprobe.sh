@@ -196,13 +196,13 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo apt-get install -y --force-yes elasticsearch logstash
             $sudo update-rc.d elasticsearch defaults 95 10
             echo 'Configuring Elasticsearch'
-            if [[ !-d "/var/data" ]]; then  
+            if [ ! -d "/var/data" ]; then  
                 $sudo mkdir /var/data/
             fi
-            if [[ !-d "/var/data/elasticsearch" ]]; then  
+            if [ ! -d "/var/data/elasticsearch" ]; then  
                 $sudo mkdir /var/data/elasticsearch
             fi
-            if [[ !-d "/var/data/elasticsearch/tmp" ]]; then  
+            if [ ! -d "/var/data/elasticsearch/tmp" ]; then  
                 $sudo mkdir /var/data/elasticsearch/tmp
             fi
             $sudo chmod -r 775 /var/data/elasticsearch
