@@ -180,7 +180,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
                 sudo add-apt-repository 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main'
                 sudo add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' 
                 sudo apt-get update
-                sudo apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+                sudo apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 apache2-utils libzmq-dev redis-server
             elif [ "$OS" == "Debian" ]; then
             echo 'Installing required debian packages...'
                 sudo=''
@@ -208,12 +208,12 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo chmod -R 777 /var/data/elasticsearch
             # adjust settings for single nodes
             $sudo cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bak
-            regexp='^[ \t]*index.number_of_shards[ \t]*:.*'
-            line='index.number_of_shards: 1'
-            $sudo sed -i "s#$regexp#$line#g" /etc/elasticsearch/elasticsearch.yml
-            regexp='^[ \t]*index.number_of_replicas[ \t]*:.*'
-            line='index.number_of_replicas: 0'
-            $sudo sed -i "s#$regexp#$line#g" /etc/elasticsearch/elasticsearch.yml
+            #regexp='^[ \t]*index.number_of_shards[ \t]*:.*'
+            #line='index.number_of_shards: 1'
+            #$sudo sed -i "s#$regexp#$line#g" /etc/elasticsearch/elasticsearch.yml
+            #regexp='^[ \t]*index.number_of_replicas[ \t]*:.*'
+            #line='index.number_of_replicas: 0'
+            #$sudo sed -i "s#$regexp#$line#g" /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\cluster.name: elk' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\node.name: "elastic-master"' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\node.master: true' /etc/elasticsearch/elasticsearch.yml
@@ -221,8 +221,8 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo sed -i '$a\path.data: /var/data/elasticsearch' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\path.work: /var/data/elasticsearch/tmp' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\path.logs: /var/log/elasticsearch' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\index.number_of_shards: 1' /etc/elasticsearch/elasticsearch.yml
-            # sed -i '$a\index.number_of_replicas: 0' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\index.number_of_shards: 1' /etc/elasticsearch/elasticsearch.yml
+            $sudo sed -i '$a\index.number_of_replicas: 0' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\discovery.zen.ping.multicast.enabled: false' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
@@ -258,9 +258,13 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo sh -c "ulimit -l unlimited"
             $sudo sh -c "ulimit -n 999999" 
             
+            #disable logstash-web, just in case...
+            $sudo update-rc.d logstash-web disable
+            $sudo service logstash-web stop
+            
             echo 'Restarting ELK..'
-            $sudo service logstash restart
             $sudo service elasticsearch restart
+            $sudo /etc/init.d/logstash restart
             
             # Let's give it a sec to start
             echo "Waiting for services to start... "
