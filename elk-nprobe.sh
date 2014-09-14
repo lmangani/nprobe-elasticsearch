@@ -210,10 +210,10 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bak
             regexp='^[ \t]*index.number_of_shards[ \t]*:.*'
             line='index.number_of_shards: 1'
-            $sudo sed -i "s#$regexp#$line#g" /tmp/elconf.yml
+            $sudo sed -i "s#$regexp#$line#g" /etc/elasticsearch/elasticsearch.yml
             regexp='^[ \t]*index.number_of_replicas[ \t]*:.*'
             line='index.number_of_replicas: 0'
-            $sudo sed -i "s#$regexp#$line#g" /tmp/elconf.yml
+            $sudo sed -i "s#$regexp#$line#g" /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\cluster.name: elk' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\node.name: "elastic-master"' /etc/elasticsearch/elasticsearch.yml
             $sudo sed -i '$a\node.master: true' /etc/elasticsearch/elasticsearch.yml
