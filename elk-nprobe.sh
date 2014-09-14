@@ -205,7 +205,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             if [ ! -d "/var/data/elasticsearch/tmp" ]; then  
                 $sudo mkdir /var/data/elasticsearch/tmp
             fi
-            $sudo chmod -r 775 /var/data/elasticsearch
+            $sudo chmod -R 777 /var/data/elasticsearch
             # adjust settings for single nodes
             $sudo cp /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.bak
             regexp='^[ \t]*index.number_of_shards[ \t]*:.*'
@@ -272,8 +272,13 @@ echo "## Would you like to install a local ELK? [y/N]: "
             # set default dashboard to nProbe 
             regdef='^[ \t]*default_route[ \t]*:.*'
             newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Statistics",'
-            $sudo sed -i "s#$regdef#$newdef#g" /var/www/kibana/config.js
-            
+            if [ "$OS" == "Debian" ]; then
+                           $sudo sed -i "s#$regdef#$newdef#g" /var/www/kibana/config.js
+
+            elif [ "$OS" == "Ubuntu" ]; then
+                           $sudo sed -i "s#$regdef#$newdef#g" /var/www/html/kibana/config.js
+
+            fi
             # Installing optional .htaccess for kibana
             echo "## Would you like to password protect Kibana [y/N]: "
             read  setELK
