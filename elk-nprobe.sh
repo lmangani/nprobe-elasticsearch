@@ -120,7 +120,7 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
                 ./configure
                 ./make && make install
                 ########## semi-manual installation of the static requirements #########
-                apt-get install -y --force-yes libmysqlclient-dev libssl-dev libnuma-dev
+                apt-get install -y --force-yes libmysqlclient-dev libssl-dev libnuma-dev curl
                 ln -s /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18 /usr/lib/x86_64-linux-gnu/libmysqlclient.so.16
                 ln -s /usr/lib/x86_64-linux-gnu/libssl.so.1.0.0 /usr/lib/x86_64-linux-gnu/libssl.so.10
                 ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.0 /usr/lib/x86_64-linux-gnu/libcrypto.so.10
@@ -130,7 +130,7 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
                 rm -rf libmysqlclient16_5.1.73-1_amd64.deb
                 ################################ nProbe ################################
                 cd /usr/src
-                latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nProbe/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
+                latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nprobe-dev/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
                 wget http://www.nmon.net/packages/rpm/x64/nProbe/$latest
                 alien -i $latest
                 
