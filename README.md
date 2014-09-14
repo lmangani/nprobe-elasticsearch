@@ -39,12 +39,26 @@ Verify nProbe is functioning:
 $ nprobe --version
 ```
 
+Verify EL(k) is up:
+```
+# /etc/init.d/logstash status
+[ ok ] logstash is running
+# /etc/init.d/elasticsearch status
+[ ok ] elasticsearch is running.
+# curl --head http://localhost/kibana
+HTTP/1.1 200 OK
+...
+
+```
+
 ## Run
 You can now use nProbe to send data to your ELK stack:
 ```
 $ nprobe -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %HTTP_SITE %HTTP_RET_CODE %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE %SRC_IP_COUNTRY %DST_IP_COUNTRY %APPL_LATENCY_MS" --tcp "127.0.0.1:5656" -b 1 -i any --json-labels -t 60
 ```
 
+## Play
+Go to http://{your_host_ip}/kibana to start playing with the generated data and using the example dashboards
 
 ## Todo:
 - HA/Distributed setup / docker (coming soon)
