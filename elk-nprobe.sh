@@ -184,11 +184,12 @@ echo "## Would you like to install a local ELK? [y/N]: "
             elif [ "$OS" == "Debian" ]; then
             echo 'Installing required debian packages...'
                 sudo=''
-                wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+                wget -O /tmp/esgpg.key http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add /tmp/esgpg.key
+                rm -rf /tmp/esgpg.key
                 echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' > /etc/apt/sources.list.d/elk.list
                 echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
                 apt-get update
-                sudo apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
+                apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             fi
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
