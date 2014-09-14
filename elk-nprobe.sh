@@ -273,6 +273,39 @@ echo "## Would you like to install a local ELK? [y/N]: "
             regdef='^[ \t]*default_route[ \t]*:.*'
             newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Statistics",'
             $sudo sed -i "s#$regdef#$newdef#g" /var/www/kibana/config.js
+            
+            # Installing optional .htaccess for kibana
+            echo "## Would you like to password protect Kibana [y/N]: "
+            read  setELK
+            case $setELK in
+                Y|y)
+                # Create pass
+                echo "Please choose a username:"
+                read kUSER
+                echo "Please choose a password for user $kUSER:"
+                $sudo htpasswd -c /var/elk.htpasswd $kUSER
+                
+                if [ "$OS" == "Debian" ]; then
+                    HTFILE="/var/www/kibana/.htaccess"
+                elif [ "$OS" == "Ubuntu" ]; then
+                    HTFILE="/var/www/html/kibana/.htaccess"
+                fi
+                if [ -f "/var/elk.htpasswd" ]; then
+                    $sudo echo "AuthType Basic" > $HTFILE
+                    $sudo echo "AuthName 'nProbe ELK'" >> $HTFILE
+                    $sudo echo "AuthUserFile /var/elk.htpasswd" >> $HTFILE
+                    $sudo echo "Require valid-user" >> $HTFILE
+                    echo
+                    echo "Authentication set in: $HTFILE with access defined in /var/elk.htpasswd"
+                else
+                    echo "Could not set authentication! Please configure .htaccess manually."
+                fi
+                ;;
+                N|n|*)
+                # no password
+                echo "No password - Please do manually protect your server!"
+                ;;
+            esac
 
             
             echo "Installing maintenance scripts/tools for ES indexes..."
