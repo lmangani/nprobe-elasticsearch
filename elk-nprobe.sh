@@ -9,6 +9,7 @@
 #    to begin modeling their own datasets and dashboards based on nProbe generated metrics.
 #
 #    THIS SCRIPT IS IN ALPHA STAGE: USE AT YOUR OWN RISK!
+#    SUGGESTED OPERATING SYSTEM: UBUNTU SERVER 14.04
 
 VERS='1.03'
 f
@@ -17,12 +18,16 @@ CWD=$(pwd)
 # Determine OS
 ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
 if [ -f /etc/lsb-release ]; then
+    # Ubuntu
     . /etc/lsb-release
     OS=$DISTRIB_ID
     VER=$DISTRIB_RELEASE
 elif [ -f /etc/debian_version ]; then
+    # Debian
     OS=Debian  
     VER=$(cat /etc/debian_version)
+    echo "$OS/$VER temporarily unsupported! check back soon!"
+    exit 0;
 else
     OS=$(uname -s)
     VER=$(uname -r)
