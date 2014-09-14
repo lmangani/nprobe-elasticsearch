@@ -255,8 +255,8 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo cp logstash/conf.d/* /etc/logstash/conf.d/
             
             # Sys. Misc Optimize
-            $sudo ulimit -l unlimited
-            $sudo ulimit -n 999999 
+            $sudo sh -c "ulimit -l unlimited"
+            $sudo sh -c "ulimit -n 999999" 
             
             echo 'Restarting ELK..'
             $sudo service logstash restart
