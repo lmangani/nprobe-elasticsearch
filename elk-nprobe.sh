@@ -11,7 +11,7 @@
 #    THIS SCRIPT IS IN ALPHA STAGE: USE AT YOUR OWN RISK!
 
 VERS='1.03'
-
+f
 CWD=$(pwd)
 
 # Determine OS
@@ -110,7 +110,7 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
                 
             elif [ "$OS" == "Debian" ]; then
                 echo 'Installing base packages...'
-                apt-get install -y --force yes build-essential automake autoconf libtool alien git
+                apt-get install -y --force-yes build-essential automake autoconf libtool alien git
                 echo 'Installing nProbe for stock Debian (+ static libs)...'
                 ######### manually install zeromq3 #################
                 cd /usr/src
