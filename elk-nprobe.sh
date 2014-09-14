@@ -131,7 +131,7 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
                 ################################ nProbe ################################
                 cd /usr/src
                 latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nprobe-dev/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
-                wget http://www.nmon.net/packages/rpm/x64/nProbe/$latest
+                wget http://www.nmon.net/packages/rpm/x64/nprobe-dev/$latest
                 alien -i $latest
                 
                 echo "## Would you like to install Maxmind GeoIP data files? [y/N]: "
