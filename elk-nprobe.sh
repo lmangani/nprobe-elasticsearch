@@ -130,8 +130,8 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
                 rm -rf libmysqlclient16_5.1.73-1_amd64.deb
                 ################################ nProbe ################################
                 cd /usr/src
-                latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nprobe-dev/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
-                wget http://www.nmon.net/packages/rpm/x64/nprobe-dev/$latest
+                latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nprobe/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
+                wget http://www.nmon.net/packages/rpm/x64/nprobe/$latest
                 alien -i $latest
                 
                 echo "## Would you like to install Maxmind GeoIP data files? [y/N]: "
