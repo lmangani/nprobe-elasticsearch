@@ -228,8 +228,8 @@ echo "## Would you like to install a local ELK? [y/N]: "
             # $sudo sed -i '$a\path.data: /var/data/elasticsearch' /etc/elasticsearch/elasticsearch.yml
             # $sudo sed -i '$a\path.work: /var/data/elasticsearch/tmp' /etc/elasticsearch/elasticsearch.yml
             # $sudo sed -i '$a\path.logs: /var/log/elasticsearch' /etc/elasticsearch/elasticsearch.yml
-            # $sudo sed -i '$a\index.number_of_shards: 1' /etc/elasticsearch/elasticsearch.yml
-            # $sudo sed -i '$a\index.number_of_replicas: 0' /etc/elasticsearch/elasticsearch.yml
+             $sudo sed -i '$a\index.number_of_shards: 1' /etc/elasticsearch/elasticsearch.yml
+             $sudo sed -i '$a\index.number_of_replicas: 0' /etc/elasticsearch/elasticsearch.yml
             # $sudo sed -i '$a\discovery.zen.ping.multicast.enabled: false' /etc/elasticsearch/elasticsearch.yml
             # $sudo sed -i '$a\discovery.zen.ping.unicast.hosts: ["127.0.0.1:[9300-9400]"]' /etc/elasticsearch/elasticsearch.yml
             # $sudo sed -i '$a\bootstrap.mlockall: true' /etc/elasticsearch/elasticsearch.yml
@@ -283,7 +283,8 @@ echo "## Would you like to install a local ELK? [y/N]: "
             $sudo ./dashload.sh
             # set default dashboard to nProbe 
             regdef='^[ \t]*default_route[ \t]*:.*'
-            newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Statistics",'
+            # newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Statistics",'
+            newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Flow%20Search",'
             if [ "$OS" == "Debian" ]; then
                            $sudo sed -i "s#$regdef#$newdef#g" /var/www/kibana/config.js
 
