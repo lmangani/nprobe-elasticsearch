@@ -4,7 +4,7 @@
 #
 # Description: 
 #    This script will automatically install and configure nProbe + Logstash, Elasticsearch 
-#    and Kibana3 on a single node/server to facilitate testing and prototyping with nProbe. 
+#    and Qbana on a single node/server to facilitate testing and prototyping with nProbe. 
 #    The script also installs some nProbe specific dashboards as starting point for users
 #    to begin modeling their own datasets and dashboards based on nProbe generated metrics.
 #
@@ -26,8 +26,8 @@ elif [ -f /etc/debian_version ]; then
     # Debian
     OS=Debian  
     VER=$(cat /etc/debian_version)
-    echo "$OS/$VER temporarily unsupported! check back soon!"
-    exit 0;
+    #echo "$OS/$VER temporarily unsupported! check back soon!"
+    #exit 0;
 else
     OS=$(uname -s)
     VER=$(uname -r)
@@ -115,29 +115,13 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
                 
             elif [ "$OS" == "Debian" ]; then
                 echo 'Installing base packages...'
-                apt-get install -y --force-yes build-essential automake autoconf libtool alien git
-                echo 'Installing nProbe for stock Debian (+ static libs)...'
-                ######### manually install zeromq3 #################
-                cd /usr/src
-                wget http://download.zeromq.org/zeromq-3.2.4.tar.gz
-                tar zxvf zeromq-3.2.4.tar.gz
-                cd zeromq-3.2.4
-                ./configure
-                ./make && make install
-                ########## semi-manual installation of the static requirements #########
-                apt-get install -y --force-yes libmysqlclient-dev libssl-dev libnuma-dev curl
-                ln -s /usr/lib/x86_64-linux-gnu/libmysqlclient.so.18 /usr/lib/x86_64-linux-gnu/libmysqlclient.so.16
-                ln -s /usr/lib/x86_64-linux-gnu/libssl.so.1.0.0 /usr/lib/x86_64-linux-gnu/libssl.so.10
-                ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.0 /usr/lib/x86_64-linux-gnu/libcrypto.so.10
-                cd /usr/src
-                wget http://ftp.us.debian.org/debian/pool/main/m/mysql-5.1/libmysqlclient16_5.1.73-1_amd64.deb
-                dpkg -i libmysqlclient16_5.1.73-1_amd64.deb 
-                rm -rf libmysqlclient16_5.1.73-1_amd64.deb
-                ################################ nProbe ################################
-                cd /usr/src
-                latest=$(curl -s -l http://www.nmon.net/packages/rpm/x64/nprobe/ | grep x86_64.rpm | sed 's/^.*<a href="//' | sed 's/".*$//' | tail -1)
-                wget http://www.nmon.net/packages/rpm/x64/nprobe/$latest
-                alien -i $latest
+                echo 'Installing nProbe from ntop $OS $VER repository...'
+                $sudo wget http://www.nmon.net/apt/7.6/all/apt-ntop.deb
+                $sudo dpkg -i apt-ntop.deb
+                $sudo apt-get clean all
+                $sudo apt-get update
+                $sudo apt-get install -y --force-yes pfring nprobe
+                $sudo rm -rf ./apt-ntop.deb
                 
                 echo "## Would you like to install Maxmind GeoIP data files? [y/N]: "
                 read  setMAX
@@ -183,7 +167,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             sudo='sudo'
                 sudo wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
                 sudo add-apt-repository 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main'
-                sudo add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' 
+                #sudo add-apt-repository 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' 
                 sudo apt-get update
                 sudo apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 apache2-utils libzmq-dev redis-server
             elif [ "$OS" == "Debian" ]; then
@@ -192,14 +176,15 @@ echo "## Would you like to install a local ELK? [y/N]: "
                 wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add -
                 #wget -O /tmp/esgpg.key http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add /tmp/esgpg.key && rm -rf /tmp/esgpg.key
                 echo 'deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main' > /etc/apt/sources.list.d/elk.list
-                echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
+                #echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' >> /etc/apt/sources.list.d/elk.list
                 apt-get update
                 apt-get install -y --force-yes default-jdk ruby ruby1.9.1-dev libcurl4-openssl-dev apache2 libzmq-dev redis-server
             fi
             ################################## ELK #################################
             echo 'Install Pre-Reqs and EL from elasticsearch repository'
             cd /usr/src
-            $sudo apt-get install -y --force-yes elasticsearch logstash
+            # $sudo apt-get install -y --force-yes elasticsearch logstash
+            $sudo apt-get install -y --force-yes elasticsearch
             $sudo update-rc.d elasticsearch defaults 95 10
             echo 'Configuring Elasticsearch'
             if [ ! -d "/var/data" ]; then  
@@ -243,57 +228,44 @@ echo "## Would you like to install a local ELK? [y/N]: "
             # $sudo cp logstash/patterns/* /etc/logstash/patterns/
             # rm -rf logstash
             # echo 'Remember to set you patterns_dir to "/etc/logstash/patterns" (i.e. patterns_dir => "/etc/logstash/patterns")'
-            ################################# Kibana ################################
-            echo 'Installing the Kibana frontend...'
+            ################################# Qbana ################################
+            echo 'Installing the Qbana frontend...'
             cd /usr/src
             # We use the Packetbeat fork in this version
             if [ "$OS" == "Debian" ]; then
-                $sudo git clone https://github.com/packetbeat/kibana.git kibana
-                $sudo mkdir /var/www/kibana
-                $sudo mv kibana/src/* /var/www/kibana
+                $sudo git clone https://github.com/QXIP/Qbana.git qbana
+                $sudo mkdir /var/www/qbana
+                $sudo mv qbana/src/* /var/www/qbana
             elif [ "$OS" == "Ubuntu" ]; then
-                $sudo git clone https://github.com/packetbeat/kibana.git kibana
-                $sudo mkdir /var/www/html/kibana
-                $sudo mv kibana/src/* /var/www/html/kibana
+                $sudo git clone https://github.com/QXIP/Qbana.git qbana
+                $sudo mkdir /var/www/html/qbana
+                $sudo mv qbana/src/* /var/www/html/qbana
             fi
             ############################# nprobe ELK ################################
             echo 'Configuring nProbe ELK...'
             cd $CWD
-            $sudo cp logstash/conf.d/* /etc/logstash/conf.d/
+            # $sudo cp logstash/conf.d/* /etc/logstash/conf.d/
             
             # Sys. Misc Optimize
             $sudo sh -c "ulimit -l unlimited"
             $sudo sh -c "ulimit -n 999999" 
             
             #disable logstash-web, just in case...
-            $sudo update-rc.d logstash-web disable
-            $sudo service logstash-web stop
-            $sudo rm -rf /etc/init/logstash-web.conf 
+            # $sudo update-rc.d logstash-web disable
+            # $sudo service logstash-web stop
+            # $sudo rm -rf /etc/init/logstash-web.conf 
             
             echo 'Restarting ELK..'
             $sudo service elasticsearch restart
-            $sudo /etc/init.d/logstash restart
+            # $sudo /etc/init.d/logstash restart
             
             # Let's give it a sec to start
             echo "Waiting for services to start... "
             sleep 20
             
-            echo "Installing custom Kibana Dashboards..."
             cd $CWD
-            $sudo ./dashload.sh
-            # set default dashboard to nProbe 
-            regdef='^[ \t]*default_route[ \t]*:.*'
-            # newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Statistics",'
-            newdef='    default_route: "/dashboard/elasticsearch/nProbe%20-%20Flow%20Search",'
-            if [ "$OS" == "Debian" ]; then
-                           $sudo sed -i "s#$regdef#$newdef#g" /var/www/kibana/config.js
-
-            elif [ "$OS" == "Ubuntu" ]; then
-                           $sudo sed -i "s#$regdef#$newdef#g" /var/www/html/kibana/config.js
-
-            fi
-            # Installing optional .htaccess for kibana
-            echo "## Would you like to password protect Kibana [y/N]: "
+            # Installing optional .htaccess for qbana
+            echo "## Would you like to password protect Qbana [y/N]: "
             read  setELK
             case $setELK in
                 Y|y)
@@ -304,9 +276,9 @@ echo "## Would you like to install a local ELK? [y/N]: "
                 $sudo htpasswd -c /var/elk.htpasswd $kUSER
                 
                 if [ "$OS" == "Debian" ]; then
-                    HTFILE="/var/www/kibana/.htaccess"
+                    HTFILE="/var/www/qbana/.htaccess"
                 elif [ "$OS" == "Ubuntu" ]; then
-                    HTFILE="/var/www/html/kibana/.htaccess"
+                    HTFILE="/var/www/html/qbana/.htaccess"
                 fi
                 if [ -f "/var/elk.htpasswd" ]; then
                     $sudo echo "AuthType Basic" > $HTFILE
@@ -338,7 +310,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             localip=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
             echo "ELK Installation complete!"
             echo
-            echo -e "Start nprobe and connect to http://$localip/kibana"
+            echo -e "Start nprobe and connect to http://$localip/qbana"
 
             
 
@@ -347,7 +319,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             echo "Skipping ELK Installation...."
             if [ "$NPROBE" == "Y" ]; then
                 echo "* To install the nprobe template, copy logstash/conf.d/nprobe.conf to your Logstash(es)."
-                echo "* To install the nProbe dashboards to your own Kibana use: ./dashload.sh {ELK_IP_ADDRESS}"
+                echo "* To install your own Qbana: https://github.com/QXIP/Qbana.git"
                 echo
             fi
             ;;
