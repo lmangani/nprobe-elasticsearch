@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# ntop.org & qxip.net - Experimental nProbe + ELK Installer + nProbe custom dashboards
+# ntop.org & qxip.net - Experimental nProbe + ELQ Installer + nProbe custom dashboards
 #
 # Description: 
 #    This script will automatically install and configure nProbe + Logstash, Elasticsearch 
@@ -54,7 +54,7 @@ echo " :::::::::::::::::::::::::::::::::   :::::::::::::,. "
 echo " :::::::::::::::::::::::::::::::::  .:::::::::::::,. "
 echo "  ,::::::::::::::::::::::::::::::::::::::::::::::,.  "
 echo
-echo "   ntop.org - Local nProbe + ELK Installer (v$VERS)"
+echo "   ntop.org - Local nProbe + ELQ Installer (v$VERS)"
 echo "              os: $OS/$VER"
 echo
 echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
@@ -156,11 +156,11 @@ echo "## Would you like to install nProbe (unlicensed)? [y/N]: "
             ;;
     esac
 
-echo "## Would you like to install a local ELK? [y/N]: "
+echo "## Would you like to install a local ELQ? [y/N]: "
     read  setELK
     case $setELK in
         Y|y)
-            echo "Installing ELK...."
+            echo "Installing ELQ...."
             # ubuntu 
             if [ "$OS" == "Ubuntu" ]; then
             echo 'Installing required ubuntu packages...'
@@ -242,7 +242,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
                 $sudo mv qbana/src/* /var/www/html/qbana
             fi
             ############################# nprobe ELK ################################
-            echo 'Configuring nProbe ELK...'
+            echo 'Configuring nProbe ELQ...'
             cd $CWD
             # $sudo cp logstash/conf.d/* /etc/logstash/conf.d/
             
@@ -255,7 +255,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
             # $sudo service logstash-web stop
             # $sudo rm -rf /etc/init/logstash-web.conf 
             
-            echo 'Restarting ELK..'
+            echo 'Restarting ELQ..'
             $sudo service elasticsearch restart
             # $sudo /etc/init.d/logstash restart
             
@@ -316,7 +316,7 @@ echo "## Would you like to install a local ELK? [y/N]: "
 
             ;;
         N|n|*)
-            echo "Skipping ELK Installation...."
+            echo "Skipping ELQ Installation...."
             if [ "$NPROBE" == "Y" ]; then
                 echo "* To install the nprobe template, copy logstash/conf.d/nprobe.conf to your Logstash(es)."
                 echo "* To install your own Qbana: https://github.com/QXIP/Qbana.git"
@@ -330,10 +330,10 @@ echo "## Would you like to install a local ELK? [y/N]: "
         case $startNP in
             Y|y)
                 echo "Starting nProbe in background..."
-                $sudo nprobe -b 0 -i any --json-labels -t 30 --tcp 127.0.0.1:5656 -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE %SRC_IP_COUNTRY %DST_IP_COUNTRY %APPL_LATENCY_MS" -G
+                $sudo nprobe -b 0 -i any --json-labels -t 60 --redis localhost --elastic "nProbe;nprobe;http://127.0.0.1:9200/_bulk" -T "%IPV4_SRC_ADDR %L4_SRC_PORT %IPV4_DST_ADDR %L4_DST_PORT %PROTOCOL %IN_BYTES %OUT_BYTES %FIRST_SWITCHED %LAST_SWITCHED %IN_PKTS %OUT_PKTS %IP_PROTOCOL_VERSION %APPLICATION_ID %L7_PROTO_NAME %ICMP_TYPE %SRC_IP_COUNTRY %DST_IP_COUNTRY %APPL_LATENCY_MS" -G
                 ;;
             N|n|*)
-                echo "Do not forget to start a local or remote nProbe to start injecting data to your ELK."
+                echo "Do not forget to start a local or remote nProbe to start injecting data to your ELQ."
                 ;;
         esac
 echo
