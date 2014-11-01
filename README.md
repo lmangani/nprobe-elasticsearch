@@ -1,5 +1,5 @@
 # nProbe-ElasticSearch
-This project brings nProbe metrics into ELQ stack(s) for usage, development, data modeling and prototyping.
+This project brings nProbe metrics into Elasticsearch for development, data modeling and prototyping.
 
 ## What is nProbe?
 [nProbe™ v6 An Extensible NetFlow v5/v9/IPFIX GPL Probe for IPv4/v6](http://www.ntop.org/products/nprobe/)  [(ntop.org)](http://www.ntop.org/)
