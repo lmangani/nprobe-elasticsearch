@@ -49,6 +49,9 @@ HTTP/1.1 200 OK
 
 ```
 
+## Create a Template for nProbe
+Download and push the ES nProbe template: https://github.com/lmangani/nProbe-output-elasticsearch
+
 ## Run
 You can now use nProbe to send data to Elasticsearch's BULK Indexing API:
 ```
